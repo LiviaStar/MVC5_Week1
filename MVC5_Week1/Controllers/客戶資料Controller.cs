@@ -17,7 +17,7 @@ namespace MVC5_Week1.Controllers
         // GET: 客戶資料
         public ActionResult Index()
         {
-            return View(db.客戶資料.ToList());
+            return View(db.客戶資料.ToList() );
         }
 
         // GET: 客戶資料/Details/5
