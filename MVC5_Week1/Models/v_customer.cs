@@ -12,12 +12,11 @@ namespace MVC5_Week1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class v_customer
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int Id { get; set; }
+        public string 客戶名稱 { get; set; }
+        public Nullable<int> 客戶聯絡人數量 { get; set; }
+        public Nullable<int> as客戶銀行資訊數量 { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace MVC5_Week1.Models
         public Nullable<int> 分行代碼 { get; set; }
         public string 帳戶名稱 { get; set; }
         public string 帳戶號碼 { get; set; }
+        public bool isDelete { get; set; }
     
         public virtual 客戶資料 客戶資料 { get; set; }
     }

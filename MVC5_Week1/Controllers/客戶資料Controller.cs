@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5_Week1.Models;
+using System.Data.Entity.Validation;
 
 namespace MVC5_Week1.Controllers
 {
@@ -15,10 +16,26 @@ namespace MVC5_Week1.Controllers
         private 客戶資料Entities db = new 客戶資料Entities();
 
         // GET: 客戶資料
-        public ActionResult Index()
+        public ActionResult Index(string searchStr1)
         {
-            return View(db.客戶資料.ToList() );
+            var data = new object();
+
+            if (!String.IsNullOrEmpty(searchStr1))
+            {
+                data = db.客戶資料
+                    .Where(p => p.isDelete != true &&
+                    p.客戶名稱.Contains(searchStr1));
+            }
+            else
+            {
+                data = db.客戶資料
+                    .Where(p => p.isDelete != true);
+            }
+
+            return View(data);
         }
+
+
 
         // GET: 客戶資料/Details/5
         public ActionResult Details(int? id)
@@ -110,8 +127,19 @@ namespace MVC5_Week1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             客戶資料 客戶資料 = db.客戶資料.Find(id);
-            db.客戶資料.Remove(客戶資料);
-            db.SaveChanges();
+            //db.客戶資料.Remove(客戶資料);
+            客戶資料.isDelete = true;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+            
+
             return RedirectToAction("Index");
         }
 
@@ -123,5 +151,19 @@ namespace MVC5_Week1.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
+        //public ActionResult Query(FormCollection collection)
+        //{
+        //    //var str1 = Request.Form["custName"];
+        //    var str2 = collection["custName"];
+
+        //    //ViewData["custName"] = collection["custName"];
+
+        //    var all = db.客戶資料.AsQueryable();
+        //    var data = all.Where(p => p.客戶名稱.Contains(str2));
+
+        //    return View("Index",data);
+        //}
     }
 }

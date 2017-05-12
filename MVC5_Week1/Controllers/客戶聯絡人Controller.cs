@@ -14,10 +14,16 @@ namespace MVC5_Week1.Controllers
     {
         private 客戶資料Entities db = new 客戶資料Entities();
 
+        public ActionResult v_customer()
+        {
+            return View(db.v_customer.ToList());
+        }
+
         // GET: 客戶聯絡人
         public ActionResult Index()
         {
-            var 客戶聯絡人 = db.客戶聯絡人.Include(客 => 客.客戶資料);
+            var 客戶聯絡人 = db.客戶聯絡人.Include(客 => 客.客戶資料)
+                .Where(p => p.客戶資料.isDelete != true);
             return View(客戶聯絡人.ToList());
         }
 
